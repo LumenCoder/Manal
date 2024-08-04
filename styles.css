@@ -42,14 +42,60 @@ body, html {
     animation: fadeIn 2s;
 }
 
-#rose {
+#rose-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
     z-index: 1;
-    animation: roseGrow 3s forwards;
+    animation: roseGrow 3s forwards, roseAnimate 3s 3s infinite;
+}
+
+.petal, .stem {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+}
+
+.petal1 {
+    width: 40px;
+    height: 80px;
+    top: 20px;
+    left: 20px;
+    animation: petal1Anim 3s forwards;
+}
+
+.petal2 {
+    width: 40px;
+    height: 80px;
+    top: 20px;
+    left: 60px;
+    animation: petal2Anim 3s forwards;
+}
+
+.petal3 {
+    width: 40px;
+    height: 80px;
+    top: 60px;
+    left: 20px;
+    animation: petal3Anim 3s forwards;
+}
+
+.petal4 {
+    width: 40px;
+    height: 80px;
+    top: 60px;
+    left: 60px;
+    animation: petal4Anim 3s forwards;
+}
+
+.stem {
+    width: 10px;
+    height: 100px;
+    top: 140px;
+    left: 50px;
+    animation: stemAnim 3s forwards;
 }
 
 @keyframes fadeIn {
@@ -67,6 +113,36 @@ body, html {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
     }
+}
+
+@keyframes roseAnimate {
+    0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+    50% { transform: translate(-50%, -50%) scale(1.1) rotate(5deg); }
+}
+
+@keyframes petal1Anim {
+    from { transform: translate(-50%, -50%) scale(0); }
+    to { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes petal2Anim {
+    from { transform: translate(-50%, -50%) scale(0); }
+    to { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes petal3Anim {
+    from { transform: translate(-50%, -50%) scale(0); }
+    to { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes petal4Anim {
+    from { transform: translate(-50%, -50%) scale(0); }
+    to { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes stemAnim {
+    from { height: 0; }
+    to { height: 100px; }
 }
 
 .blur {
