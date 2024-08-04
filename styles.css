@@ -49,72 +49,40 @@ body, html {
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
     z-index: 1;
+    animation: roseGrow 3s forwards, roseAnimate 5s infinite;
 }
 
-.petal {
-    position: absolute;
-    background: white;
-    width: 20px;
-    height: 50px;
-    border-radius: 50%;
-    transform-origin: bottom center;
+.flower {
+    position: relative;
 }
 
-.petal1 {
-    transform: rotate(0deg) translateY(-50%);
+.flower__glass {
+    width: 20vmin;
+    height: 30vmin;
+    background-image: var(--color-glass);
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+    opacity: 0.8;
+    position: relative;
 }
 
-.petal2 {
-    transform: rotate(45deg) translateY(-50%);
-}
-
-.petal3 {
-    transform: rotate(90deg) translateY(-50%);
-}
-
-.petal4 {
-    transform: rotate(135deg) translateY(-50%);
-}
-
-.petal5 {
-    transform: rotate(180deg) translateY(-50%);
-}
-
-.stem {
+.flower__glass::after {
+    content: '';
     position: absolute;
     bottom: 0;
-    width: 5px;
-    height: 100px;
-    background: white;
-    transform-origin: top center;
+    left: 0;
+    background-color: #182843;
+    width: 100%;
+    height: 2vmin;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.flower__glass::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-image: var(--color-water);
+    width: 100%;
+    height: 15vmin;
 }
 
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
-}
-
-@keyframes roseGrow {
-    to {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 1;
-    }
-}
-
-@keyframes roseAnimate {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.blur {
-    backdrop-filter: blur(15px);
-}
-
-.intense-blur {
-    backdrop-filter: blur(30px);
-}
+.flower
