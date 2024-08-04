@@ -24,6 +24,8 @@ window.onload = () => {
     }, 500);
 
     button.addEventListener('click', () => {
+        console.log('Button clicked'); // Debug message
+
         // Fade out title and button
         title.classList.remove('fade-in');
         button.classList.remove('fade-in');
@@ -32,6 +34,7 @@ window.onload = () => {
             overlay.style.display = 'none';
             roseCanvas.style.display = 'block';
             bgAudio.play();
+            console.log('Audio started'); // Debug message
             drawRose();
         }, 1000);
 
@@ -40,6 +43,7 @@ window.onload = () => {
         const fadeAudio = setInterval(() => {
             if (bgAudio.volume < 1.0) {
                 bgAudio.volume += 0.05;
+                console.log('Audio volume:', bgAudio.volume); // Debug message
             } else {
                 clearInterval(fadeAudio);
             }
