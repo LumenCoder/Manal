@@ -8,6 +8,16 @@ window.onload = () => {
     const ctx = particleCanvas.getContext('2d');
     const roseCtx = roseCanvas.getContext('2d');
 
+    // Ensure canvases resize correctly
+    const resizeCanvases = () => {
+        particleCanvas.width = window.innerWidth;
+        particleCanvas.height = window.innerHeight;
+        roseCanvas.width = window.innerWidth;
+        roseCanvas.height = window.innerHeight;
+    };
+    resizeCanvases();
+    window.onresize = resizeCanvases;
+
     // Fade in title and button
     setTimeout(() => {
         title.classList.add('fade-in');
@@ -100,13 +110,5 @@ window.onload = () => {
         }
     }
 
-    window.onresize = () => {
-        particleCanvas.width = window.innerWidth;
-        particleCanvas.height = window.innerHeight;
-        roseCanvas.width = window.innerWidth;
-        roseCanvas.height = window.innerHeight;
-    };
-
-    window.onresize();
     animateParticles();
 };
