@@ -8,7 +8,6 @@ window.onload = () => {
     const ctx = particleCanvas.getContext('2d');
     const roseCtx = roseCanvas.getContext('2d');
 
-    // Ensure canvases resize correctly
     const resizeCanvases = () => {
         particleCanvas.width = window.innerWidth;
         particleCanvas.height = window.innerHeight;
@@ -24,7 +23,7 @@ window.onload = () => {
         button.classList.add('fade-in');
     }, 500);
 
-    button.onclick = () => {
+    button.addEventListener('click', () => {
         // Fade out title and button
         title.classList.remove('fade-in');
         button.classList.remove('fade-in');
@@ -45,7 +44,7 @@ window.onload = () => {
                 clearInterval(fadeAudio);
             }
         }, 200);
-    };
+    });
 
     // Particle animation
     const particles = [];
