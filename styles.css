@@ -3,40 +3,53 @@ body, html {
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #000;
-}
-
-#container {
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    backdrop-filter: blur(10px);
-}
-
-#title {
+    overflow: hidden;
+    background-color: black;
     color: white;
-    font-size: 3em;
-    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-#beginButton {
-    margin-top: 20px;
+.overlay {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    transition: backdrop-filter 1s ease;
+}
+
+h1, button {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+h1.fade-in, button.fade-in {
+    opacity: 1;
+}
+
+#beginBtn {
     padding: 10px 20px;
-    font-size: 1em;
-    background: white;
     border: none;
+    background: white;
+    color: black;
     cursor: pointer;
+    margin-top: 20px;
 }
 
-#background {
+#particleCanvas, #roseCanvas {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+}
+
+#roseCanvas {
+    display: none;
 }
