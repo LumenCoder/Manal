@@ -1,117 +1,153 @@
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('overlay');
     const title = document.getElementById('title');
-    const button = document.getElementById('beginBtn');
-    const overlay = document.querySelector('.overlay');
-    const bgAudio = document.getElementById('bgAudio');
-    const roseCanvas = document.getElementById('roseCanvas');
-    const particleCanvas = document.getElementById('particleCanvas');
-    const ctx = particleCanvas.getContext('2d');
-    const roseCtx = roseCanvas.getContext('2d');
+    const button = document.getElementById('begin-button');
+    const rose = document.getElementById('rose');
+    const audio = document.getElementById('background-music');
+    const particleBackground = document.getElementById('particle-background');
 
-    const resizeCanvases = () => {
-        particleCanvas.width = window.innerWidth;
-        particleCanvas.height = window.innerHeight;
-        roseCanvas.width = window.innerWidth;
-        roseCanvas.height = window.innerHeight;
-    };
-    resizeCanvases();
-    window.onresize = resizeCanvases;
-
-    // Fade in title and button
-    setTimeout(() => {
-        title.classList.add('fade-in');
-        button.classList.add('fade-in');
-    }, 500);
-
-    button.addEventListener('click', () => {
-        console.log('Button clicked'); // Debug message
-
-        // Fade out title and button
-        title.classList.remove('fade-in');
-        button.classList.remove('fade-in');
-        setTimeout(() => {
-            overlay.style.backdropFilter = 'blur(0)';
-            overlay.style.display = 'none';
-            roseCanvas.style.display = 'block';
-            bgAudio.play();
-            console.log('Audio started'); // Debug message
-            drawRose();
-        }, 1000);
-
-        // Fade in audio
-        bgAudio.volume = 0;
-        const fadeAudio = setInterval(() => {
-            if (bgAudio.volume < 1.0) {
-                bgAudio.volume += 0.05;
-                console.log('Audio volume:', bgAudio.volume); // Debug message
-            } else {
-                clearInterval(fadeAudio);
-            }
-        }, 200);
+    // Initialize particles.js
+    particlesJS.load('particle-background', 'particles.json', () => {
+        console.log('Particles.js config loaded');
     });
 
-    // Particle animation
-    const particles = [];
-    const numParticles = 100;
+    // Apply initial blur
+    particleBackground.classList.add('intense-blur');
 
-    function Particle() {
-        this.x = Math.random() * particleCanvas.width;
-        this.y = Math.random() * particleCanvas.height;
-        this.radius = Math.random() * 2;
-        this.color = `rgba(255, 255, 255, ${Math.random()})`;
-        this.dx = (Math.random() - 0.5) * 2;
-        this.dy = (Math.random() - 0.5) * 2;
+    button.addEventListener('click', () => {
+        title.style.animation = 'fadeOut 1s forwards';
+        button.style.animation = 'fadeOut 1s forwards';
 
-        this.draw = function() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-            ctx.fillStyle = this.color;
-            ctx.fill();
-            ctx.closePath();
-        };
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            particleBackground.classList.remove('intense-blur');
+            particleBackground.classList.add('blur');
+        }, 1000);
 
-        this.update = function() {
-            if (this.x + this.radius > particleCanvas.width || this.x - this.radius < 0) {
-                this.dx = -this.dx;
+        // Fade in music
+        audio.volume = 0;
+        audio.play();
+        let volume = 0;
+        const fadeAudioIn = setInterval(() => {
+            if (volume < 1) {
+                volume += 0.01;
+                audio.volume = volume;
+            } else {
+                clearInterval(fadeAudioIn);
             }
-            if (this.y + this.radius > particleCanvas.height || this.y - this.radius < 0) {
-                this.dy = -this.dy;
+        }, 50);
+
+        // Show rose
+        setTimeout(() => {
+            rose.style.animation = 'roseGrow 3s forwards';
+        }, 1000);
+    });
+});
+
+// Particles.js configuration (particles.json)
+const particlesConfig = {
+    "particles": {
+        "number": {
+            "value": 80,
+            "density": {
+                "enable": true,
+                "value_area": 800
             }
-            this.x += this.dx;
-            this.y += this.dy;
-            this.draw();
-        };
-    }
-
-    for (let i = 0; i < numParticles; i++) {
-        particles.push(new Particle());
-    }
-
-    function animateParticles() {
-        requestAnimationFrame(animateParticles);
-        ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-        particles.forEach(particle => particle.update());
-    }
-
-    function drawRose() {
-        const centerX = roseCanvas.width / 2;
-        const centerY = roseCanvas.height / 2;
-        const numPetals = 100;
-        const roseRadius = 150;
-
-        for (let i = 0; i < numPetals; i++) {
-            const angle = i * 2 * Math.PI / numPetals;
-            const radius = roseRadius * Math.sin(angle * 4);
-            const x = centerX + radius * Math.cos(angle);
-            const y = centerY + radius * Math.sin(angle);
-
-            roseCtx.beginPath();
-            roseCtx.arc(x, y, 5, 0, 2 * Math.PI, false);
-            roseCtx.fillStyle = 'white';
-            roseCtx.fill();
-            roseCtx.closePath();
+        },
+        "color": {
+            "value": "#ffffff"
+        },
+        "shape": {
+            "type": "circle",
+            "stroke": {
+                "width": 0,
+                "color": "#000000"
+            },
+            "polygon": {
+                "nb_sides": 5
+            }
+        },
+        "opacity": {
+            "value": 0.5,
+            "random": false,
+            "anim": {
+                "enable": false,
+                "speed": 1,
+                "opacity_min": 0.1,
+                "sync": false
+            }
+        },
+        "size": {
+            "value": 3,
+            "random": true,
+            "anim": {
+                "enable": false,
+                "speed": 40,
+                "size_min": 0.1,
+                "sync": false
+            }
+        },
+        "line_linked": {
+            "enable": true,
+            "distance": 150,
+            "color": "#ffffff",
+            "opacity": 0.4,
+            "width": 1
+        },
+        "move": {
+            "enable": true,
+            "speed": 6,
+            "direction": "none",
+            "random": false,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {
+                "enable": false,
+                "rotateX": 600,
+                "rotateY": 1200
+            }
         }
-    }
-
-    animateParticles();
+    },
+    "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+            "onhover": {
+                "enable": true,
+                "mode": "repulse"
+            },
+            "onclick": {
+                "enable": true,
+                "mode": "push"
+            },
+            "resize": true
+        },
+        "modes": {
+            "grab": {
+                "distance": 400,
+                "line_linked": {
+                    "opacity": 1
+                }
+            },
+            "bubble": {
+                "distance": 400,
+                "size": 40,
+                "duration": 2,
+                "opacity": 8,
+                "speed": 3
+            },
+            "repulse": {
+                "distance": 200,
+                "duration": 0.4
+            },
+            "push": {
+                "particles_nb": 4
+            },
+            "remove": {
+                "particles_nb": 2
+            }
+        }
+    },
+    "retina_detect": true
 };
+particlesJS('particle-background', particlesConfig);
