@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('overlay');
     const title = document.getElementById('title');
     const button = document.getElementById('begin-button');
-    const roseContainer = document.getElementById('rose-container');
+    const rose = document.getElementById('rose');
     const audio = document.getElementById('background-music');
     const particleBackground = document.getElementById('particle-background');
 
@@ -133,4 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const fadeAudioIn = setInterval(() => {
             if (volume < 1) {
                 volume += 0.01;
-                audio.volume =
+                audio.volume = volume;
+            } else {
+                clearInterval(fadeAudioIn);
+            }
+        }, 50);
+
+        // Show rose
+        setTimeout(() => {
+            rose.style.animation = 'roseGrow 3s forwards, roseAnimate 5s infinite';
+        }, 1000);
+    });
+});
