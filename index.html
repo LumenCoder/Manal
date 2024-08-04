@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="overlay">
+    <div id="particle-background"></div>
+    <div id="overlay">
         <h1 id="title">Hello Manal</h1>
-        <button id="beginBtn">Begin</button>
+        <button id="begin-button">Begin</button>
     </div>
-    <canvas id="particleCanvas"></canvas>
-    <canvas id="roseCanvas"></canvas>
-    <audio id="bgAudio" src="audio/my_head_is_empty.mp3" preload="auto"></audio>
+    <div id="rose"></div>
+    <audio id="background-music" src="audio/my_head_is_empty.mp3"></audio>
+    <script src="particles.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
