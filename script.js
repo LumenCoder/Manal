@@ -40,8 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             const heart = document.createElement('div');
             heart.classList.add('heart');
+            heart.textContent = '♥️';
             document.body.appendChild(heart);
-        }, sentences.length * 4000 + 7000); // Adding a delay before displaying the heart
+        }, sentences.length * 4000 + 9000); // Adding a delay before displaying the heart
     });
 });
 
@@ -86,5 +87,5 @@ function displayCounter(container) {
         setTimeout(() => {
             container.removeChild(counter);
         }, 2000);
-    }, 5000);
+    }, 10000);
 }
