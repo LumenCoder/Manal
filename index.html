@@ -3,30 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello Manal</title>
+    <title>Manal's Special Page</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div id="welcome">
-            <h1 class="title">Hello Manal</h1>
-            <button class="start-button" onclick="begin()">Begin</button>
+        <div class="content">
+            <h1 id="title">Hello Manal</h1>
+            <button id="begin-btn">Begin</button>
         </div>
-        <div id="rose-container">
-            <img src="images/rose.png" alt="Rose" class="rose">
+        <div id="animation-texts" class="hidden">
+            <p class="anim-text">Hello Manal</p>
+            <p class="anim-text">I love you</p>
+            <p class="anim-text">You mean everything to me</p>
+            <p class="anim-text">I made this site for you</p>
+            <p class="anim-text">It's going to be here forever</p>
+            <p class="anim-text">Look at how long we have been together</p>
+            <p id="counter"></p>
         </div>
-        <div id="messages">
-            <div class="message" id="msg1">Hello Manal</div>
-            <div class="message" id="msg2">I love you</div>
-            <div class="message" id="msg3">You mean everything to me</div>
-            <div class="message" id="msg4">I made this site for you</div>
-            <div class="message" id="msg5">It's going to be here forever</div>
-            <div class="message" id="msg6">Look at how long we have been together</div>
-            <div id="counter"></div>
-        </div>
-        <div id="heart">
-            ❤️
-        </div>
+        <div id="heart" class="hidden">❤️</div>
     </div>
     <audio id="background-audio" src="audio/my_head_is_empty.mp3"></audio>
     <script src="script.js"></script>
