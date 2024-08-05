@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show counter after sentences
         setTimeout(() => {
             displayCounter(container);
-        }, sentences.length * 4000 + 2000); // Adding a delay before displaying the counter
+        }, sentences.length * 3000 + 2000); // Adding a delay before displaying the counter
 
         // Show heart after counter
         setTimeout(() => {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             heart.classList.add('heart');
             heart.textContent = '♥️';
             document.body.appendChild(heart);
-        }, sentences.length * 4000 + 9000); // Adding a delay before displaying the heart
+        }, sentences.length * 3000 + 12000); // Adding a delay before displaying the heart
     });
 });
 
@@ -63,11 +63,11 @@ function displaySentences(container, sentences, index) {
         container.appendChild(sentence);
 
         setTimeout(() => {
-            sentence.style.animation = 'fadeInOut 4s forwards';
+            sentence.style.animation = 'fadeInOut 3s forwards';
             setTimeout(() => {
                 container.removeChild(sentence);
                 displaySentences(container, sentences, index + 1);
-            }, 4000);
+            }, 3000);
         }, 2000);
     }
 }
@@ -87,5 +87,5 @@ function displayCounter(container) {
         setTimeout(() => {
             container.removeChild(counter);
         }, 2000);
-    }, 10000);
+    }, 12000);
 }
