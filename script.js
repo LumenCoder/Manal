@@ -1,84 +1,73 @@
-const messages = [
-    "Hello Manal",
-    "I love you",
-    "You mean everything to me",
-    "I made this site for you",
-    "It's going to be here forever",
-    "Look at how long we have been together"
-];
-
-const displayDuration = 4000; // 4 seconds
-const fadeDuration = 1000; // 1 second
-
-function begin() {
-    document.getElementById('welcome').style.animation = 'fadeOut 1s forwards';
-    setTimeout(() => {
-        document.getElementById('welcome').style.display = 'none';
-        document.getElementById('rose-container').style.display = 'block';
-        document.getElementById('rose-container').style.animation = 'fadeIn 2s forwards';
-        document.getElementById('background-audio').volume = 0;
-        document.getElementById('background-audio').play();
-        fadeInAudio();
-        showMessages();
-    }, 1000);
-}
-
-function fadeInAudio() {
+document.addEventListener('DOMContentLoaded', () => {
+    const beginBtn = document.getElementById('begin-btn');
+    const title = document.getElementById('title');
+    const container = document.querySelector('.container');
+    const animTexts = document.querySelectorAll('.anim-text');
+    const counter = document.getElementById('counter');
+    const heart = document.getElementById('heart');
     const audio = document.getElementById('background-audio');
-    let volume = 0;
-    const interval = setInterval(() => {
-        if (volume < 1) {
-            volume += 0.01;
-            audio.volume = volume;
-        } else {
-            clearInterval(interval);
-        }
-    }, 50);
-}
 
-function showMessages() {
-    let index = 0;
-    const messageElement = document.getElementById(`msg${index + 1}`);
-    messageElement.style.display = 'block';
-    messageElement.style.animation = `fadeIn ${fadeDuration}ms forwards`;
-    
-    const interval = setInterval(() => {
-        messageElement.style.animation = `fadeOut ${fadeDuration}ms forwards`;
+    beginBtn.addEventListener('click', () => {
+        // Fade out title and button
+        title.style.transition = 'opacity 2s';
+        beginBtn.style.transition = 'opacity 2s';
+        title.style.opacity = 0;
+        beginBtn.style.opacity = 0;
+
         setTimeout(() => {
-            messageElement.style.display = 'none';
-            index++;
-            if (index < messages.length) {
-                const nextMessageElement = document.getElementById(`msg${index + 1}`);
-                nextMessageElement.style.display = 'block';
-                nextMessageElement.style.animation = `fadeIn ${fadeDuration}ms forwards`;
-                if (index === messages.length - 1) {
-                    showCounter();
-                }
+            title.style.display = 'none';
+            beginBtn.style.display = 'none';
+            document.body.classList.add('blur-removed');
+            
+            // Play the audio
+            audio.volume = 0;
+            audio.play();
+            fadeInAudio(audio, 5); // 5 seconds fade in
+
+            // Show and animate text
+            showAnimationTexts(animTexts);
+        }, 2000); // Wait for fade out
+
+    });
+
+    function fadeInAudio(audio, duration) {
+        let step = 0.05 / duration;
+        let volume = 0;
+        let interval = setInterval(() => {
+            if (volume < 1) {
+                volume += step;
+                audio.volume = volume;
             } else {
                 clearInterval(interval);
-                showHeart();
             }
-        }, fadeDuration);
-    }, displayDuration);
-}
+        }, 50);
+    }
 
-function showCounter() {
-    const counterElement = document.getElementById('counter');
-    counterElement.style.display = 'block';
-    counterElement.innerText = calculateDaysFrom("2024-04-13");
-    counterElement.style.animation = `fadeIn ${fadeDuration}ms forwards`;
-}
+    function showAnimationTexts(texts) {
+        let delay = 0;
+        texts.forEach((text, index) => {
+            setTimeout(() => {
+                text.style.display = 'block';
+                text.style.animation = `fadeInOut 4s forwards`;
+                if (index === 5) { // For the counter
+                    setTimeout(() => showCounter(), 4000);
+                }
+            }, delay);
+            delay += 4000; // 4 seconds for each text
+        });
+    }
 
-function showHeart() {
-    const heartElement = document.getElementById('heart');
-    heartElement.style.display = 'block';
-    heartElement.style.animation = `fadeIn ${fadeDuration}ms forwards`;
-}
-
-function calculateDaysFrom(dateString) {
-    const startDate = new Date(dateString);
-    const currentDate = new Date();
-    const timeDifference = currentDate - startDate;
-    const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
-    return `${daysDifference} days`;
-}
+    function showCounter() {
+        const startDate = new Date('April 13, 2024');
+        const now = new Date();
+        const days = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+        counter.textContent = `${days} days`;
+        counter.style.display = 'block';
+        counter.style.animation = 'fadeInOut 4s forwards';
+        setTimeout(() => {
+            // Show heart after the counter
+            heart.style.display = 'block';
+            heart.style.animation = 'fadeInHeart 3s forwards';
+        }, 9000); // Wait for 4 seconds fade in + 5 seconds display
+    }
+});
