@@ -2,49 +2,42 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: black;
-    overflow: hidden;
-    color: white;
-    font-family: Arial, sans-serif;
 }
 
 .container {
+    text-align: center;
     position: relative;
-    text-align: center;
 }
 
-.content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-#title {
-    font-size: 2.5em;
+.title, .btn {
     opacity: 0;
-    animation: fadeIn 3s forwards;
+    animation: fadeIn 2s forwards;
 }
 
-#begin-btn {
+.title {
+    font-size: 4em;
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.btn {
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 1.2em;
-    border: none;
-    background-color: white;
+    font-size: 1.5em;
     color: black;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 10px;
-    opacity: 0;
-    animation: fadeIn 3s forwards 2s;
-    transition: all 0.5s ease;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-#begin-btn:hover {
+.btn:hover {
     background-color: black;
     color: white;
 }
@@ -53,18 +46,30 @@ body, html {
     to { opacity: 1; }
 }
 
-.hidden {
-    display: none;
+@keyframes fadeOut {
+    to { opacity: 0; }
 }
 
-.anim-text {
-    font-size: 2em;
-    opacity: 0;
+#particles {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px),
+                radial-gradient(circle, rgba(255,255,255,0.05) 3px, transparent 3px);
+    background-size: 10px 10px, 20px 20px, 30px 30px;
+    z-index: -1;
+    opacity: 0.5;
+    backdrop-filter: blur(5px);
+}
+
+.glow-text {
+    font-size: 2em;
+    color: white;
+    text-shadow: 0 0 20px white, 0 0 30px white, 0 0 40px white;
+    opacity: 0;
     animation: fadeInOut 4s forwards;
 }
 
@@ -73,37 +78,30 @@ body, html {
     50% { opacity: 1; }
 }
 
-#heart {
-    font-size: 3em;
+.heart {
+    width: 100px;
+    height: 90px;
+    position: relative;
+    margin: auto;
+    transform: rotate(-45deg);
     opacity: 0;
-    animation: fadeInHeart 3s forwards;
+    animation: fadeIn 2s forwards;
 }
 
-@keyframes fadeInHeart {
-    to { opacity: 1; }
-}
-
-/* Particle Background */
-body::before {
-    content: '';
-    position: fixed;
+.heart::before, .heart::after {
+    content: "";
+    width: 100px;
+    height: 90px;
+    border-radius: 50px 50px 0 0;
+    background: red;
+    position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('path-to-your-particle-background-image.jpg') no-repeat center center;
-    background-size: cover;
-    filter: blur(8px);
-    z-index: -1;
 }
 
-body.blur-removed::before {
-    filter: blur(0);
+.heart::before {
+    left: 100px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation: none !important;
-        transition: none !important;
-    }
+.heart::after {
+    left: -100px;
 }
