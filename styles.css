@@ -1,13 +1,12 @@
 body, html {
     margin: 0;
     padding: 0;
-    width: 100%;
     height: 100%;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: black;
+    background-color: black;
+    overflow: hidden;
     color: white;
     font-family: Arial, sans-serif;
 }
@@ -17,71 +16,94 @@ body, html {
     text-align: center;
 }
 
-#welcome {
+.content {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    animation: fadeIn 2s forwards;
 }
 
-.title {
-    font-size: 3em;
+#title {
+    font-size: 2.5em;
+    opacity: 0;
+    animation: fadeIn 3s forwards;
 }
 
-.start-button {
-    font-size: 1.5em;
+#begin-btn {
+    margin-top: 20px;
     padding: 10px 20px;
+    font-size: 1.2em;
+    border: none;
     background-color: white;
     color: black;
-    border: none;
     cursor: pointer;
-    transition: background-color 0.3s;
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeIn 3s forwards 2s;
+    transition: all 0.5s ease;
 }
 
-.start-button:hover {
-    background-color: gray;
-}
-
-#rose-container {
-    display: none;
-    animation: fadeIn 2s forwards;
-}
-
-.rose {
-    width: 200px;
-}
-
-.message {
-    display: none;
-    font-size: 2em;
-}
-
-#counter {
-    font-size: 2em;
-    display: none;
-}
-
-#heart {
-    display: none;
-    font-size: 5em;
+#begin-btn:hover {
+    background-color: black;
+    color: white;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    to { opacity: 1; }
 }
 
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
+.hidden {
+    display: none;
+}
+
+.anim-text {
+    font-size: 2em;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    animation: fadeInOut 4s forwards;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+#heart {
+    font-size: 3em;
+    opacity: 0;
+    animation: fadeInHeart 3s forwards;
+}
+
+@keyframes fadeInHeart {
+    to { opacity: 1; }
+}
+
+/* Particle Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('path-to-your-particle-background-image.jpg') no-repeat center center;
+    background-size: cover;
+    filter: blur(8px);
+    z-index: -1;
+}
+
+body.blur-removed::before {
+    filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
     }
 }
