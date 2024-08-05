@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             heart.classList.add('heart');
             heart.textContent = '♥️';
             document.body.appendChild(heart);
-        }, sentences.length * 3000 + 14000); // Adding a delay before displaying the heart
+        }, sentences.length * 3000 + 7000); // Adding a delay before displaying the heart
     });
 });
 
