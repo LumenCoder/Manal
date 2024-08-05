@@ -3,16 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello Manal</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Animated Background with Flower</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .flower {
+            position: relative;
+            animation: flowerIntro 5s ease-in-out infinite;
+        }
+        @keyframes flowerIntro {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="particle-background"></div>
-    <div id="overlay">
-        <h1 id="title">Manal's meaning</h1>
-        <button id="begin-button">click me :3</button>
-    </div>
-    <div class="flower" id="rose">
+    <div class="flower">
         <div class="flower-pp">
             <div class="flower_l"></div>
             <div class="f">
@@ -56,8 +84,5 @@
         </div>
         <div class="flower__glass"></div>
     </div>
-    <audio id="background-music" src="audio/my_head_is_empty.mp3"></audio>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
