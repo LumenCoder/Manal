@@ -1,147 +1,84 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('overlay');
-    const title = document.getElementById('title');
-    const button = document.getElementById('begin-button');
-    const rose = document.getElementById('rose');
-    const audio = document.getElementById('background-music');
-    const particleBackground = document.getElementById('particle-background');
+const messages = [
+    "Hello Manal",
+    "I love you",
+    "You mean everything to me",
+    "I made this site for you",
+    "It's going to be here forever",
+    "Look at how long we have been together"
+];
 
-    // Particles.js configuration
-    particlesJS('particle-background', {
-        "particles": {
-            "number": {
-                "value": 80,
-                "density": {
-                    "enable": true,
-                    "value_area": 800
-                }
-            },
-            "color": {
-                "value": "#ffffff"
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                },
-                "polygon": {
-                    "nb_sides": 5
-                }
-            },
-            "opacity": {
-                "value": 0.5,
-                "random": false,
-                "anim": {
-                    "enable": false,
-                    "speed": 1,
-                    "opacity_min": 0.1,
-                    "sync": false
-                }
-            },
-            "size": {
-                "value": 3,
-                "random": true,
-                "anim": {
-                    "enable": false,
-                    "speed": 40,
-                    "size_min": 0.1,
-                    "sync": false
-                }
-            },
-            "line_linked": {
-                "enable": true,
-                "distance": 150,
-                "color": "#ffffff",
-                "opacity": 0.4,
-                "width": 1
-            },
-            "move": {
-                "enable": true,
-                "speed": 6,
-                "direction": "none",
-                "random": false,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false,
-                "attract": {
-                    "enable": false,
-                    "rotateX": 600,
-                    "rotateY": 1200
-                }
-            }
-        },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": true,
-                    "mode": "repulse"
-                },
-                "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                },
-                "resize": true
-            },
-            "modes": {
-                "grab": {
-                    "distance": 400,
-                    "line_linked": {
-                        "opacity": 1
-                    }
-                },
-                "bubble": {
-                    "distance": 400,
-                    "size": 40,
-                    "duration": 2,
-                    "opacity": 8,
-                    "speed": 3
-                },
-                "repulse": {
-                    "distance": 200,
-                    "duration": 0.4
-                },
-                "push": {
-                    "particles_nb": 4
-                },
-                "remove": {
-                    "particles_nb": 2
-                }
-            }
-        },
-        "retina_detect": true
-    });
+const displayDuration = 4000; // 4 seconds
+const fadeDuration = 1000; // 1 second
 
-    // Apply initial blur
-    particleBackground.classList.add('intense-blur');
+function begin() {
+    document.getElementById('welcome').style.animation = 'fadeOut 1s forwards';
+    setTimeout(() => {
+        document.getElementById('welcome').style.display = 'none';
+        document.getElementById('rose-container').style.display = 'block';
+        document.getElementById('rose-container').style.animation = 'fadeIn 2s forwards';
+        document.getElementById('background-audio').volume = 0;
+        document.getElementById('background-audio').play();
+        fadeInAudio();
+        showMessages();
+    }, 1000);
+}
 
-    button.addEventListener('click', () => {
-        title.style.animation = 'fadeOut 1s forwards';
-        button.style.animation = 'fadeOut 1s forwards';
+function fadeInAudio() {
+    const audio = document.getElementById('background-audio');
+    let volume = 0;
+    const interval = setInterval(() => {
+        if (volume < 1) {
+            volume += 0.01;
+            audio.volume = volume;
+        } else {
+            clearInterval(interval);
+        }
+    }, 50);
+}
 
+function showMessages() {
+    let index = 0;
+    const messageElement = document.getElementById(`msg${index + 1}`);
+    messageElement.style.display = 'block';
+    messageElement.style.animation = `fadeIn ${fadeDuration}ms forwards`;
+    
+    const interval = setInterval(() => {
+        messageElement.style.animation = `fadeOut ${fadeDuration}ms forwards`;
         setTimeout(() => {
-            overlay.style.display = 'none';
-            particleBackground.classList.remove('intense-blur');
-            particleBackground.classList.add('blur');
-        }, 1000);
-
-        // Fade in music
-        audio.volume = 0;
-        audio.play();
-        let volume = 0;
-        const fadeAudioIn = setInterval(() => {
-            if (volume < 1) {
-                volume += 0.01;
-                audio.volume = volume;
+            messageElement.style.display = 'none';
+            index++;
+            if (index < messages.length) {
+                const nextMessageElement = document.getElementById(`msg${index + 1}`);
+                nextMessageElement.style.display = 'block';
+                nextMessageElement.style.animation = `fadeIn ${fadeDuration}ms forwards`;
+                if (index === messages.length - 1) {
+                    showCounter();
+                }
             } else {
-                clearInterval(fadeAudioIn);
+                clearInterval(interval);
+                showHeart();
             }
-        }, 50);
+        }, fadeDuration);
+    }, displayDuration);
+}
 
-        // Show rose
-        setTimeout(() => {
-            rose.style.animation = 'roseGrow 3s forwards, roseAnimate 5s infinite';
-        }, 1000);
-    });
-});
+function showCounter() {
+    const counterElement = document.getElementById('counter');
+    counterElement.style.display = 'block';
+    counterElement.innerText = calculateDaysFrom("2024-04-13");
+    counterElement.style.animation = `fadeIn ${fadeDuration}ms forwards`;
+}
+
+function showHeart() {
+    const heartElement = document.getElementById('heart');
+    heartElement.style.display = 'block';
+    heartElement.style.animation = `fadeIn ${fadeDuration}ms forwards`;
+}
+
+function calculateDaysFrom(dateString) {
+    const startDate = new Date(dateString);
+    const currentDate = new Date();
+    const timeDifference = currentDate - startDate;
+    const daysDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+    return `${daysDifference} days`;
+}
