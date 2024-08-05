@@ -1,73 +1,90 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const beginBtn = document.getElementById('begin-btn');
-    const title = document.getElementById('title');
-    const container = document.querySelector('.container');
-    const animTexts = document.querySelectorAll('.anim-text');
-    const counter = document.getElementById('counter');
-    const heart = document.getElementById('heart');
-    const audio = document.getElementById('background-audio');
+    const button = document.querySelector('.btn');
+    const title = document.querySelector('.title');
+    const particles = document.getElementById('particles');
+    const audio = document.getElementById('audio');
 
-    beginBtn.addEventListener('click', () => {
+    button.addEventListener('click', () => {
         // Fade out title and button
-        title.style.transition = 'opacity 2s';
-        beginBtn.style.transition = 'opacity 2s';
-        title.style.opacity = 0;
-        beginBtn.style.opacity = 0;
+        title.style.animation = 'fadeOut 2s forwards';
+        button.style.animation = 'fadeOut 2s forwards';
 
+        // Start playing audio
+        audio.play();
+        audio.volume = 0;
+        fadeAudioIn(audio);
+
+        // Fade out particles
+        particles.style.animation = 'fadeOut 2s forwards';
+
+        // Show sentences one by one
+        const sentences = [
+            "Hello Manal",
+            "I love you",
+            "You mean everything to me",
+            "I made this site for you",
+            "It's going to be here forever",
+            "Look at how long we have been together"
+        ];
+
+        let sentenceIndex = 0;
+        const container = document.querySelector('.container');
+        displaySentences(container, sentences, sentenceIndex);
+
+        // Show counter after sentences
         setTimeout(() => {
-            title.style.display = 'none';
-            beginBtn.style.display = 'none';
-            document.body.classList.add('blur-removed');
-            
-            // Play the audio
-            audio.volume = 0;
-            audio.play();
-            fadeInAudio(audio, 5); // 5 seconds fade in
+            displayCounter(container);
+        }, sentences.length * 4000 + 2000); // Adding a delay before displaying the counter
 
-            // Show and animate text
-            showAnimationTexts(animTexts);
-        }, 2000); // Wait for fade out
-
+        // Show heart after counter
+        setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            document.body.appendChild(heart);
+        }, sentences.length * 4000 + 7000); // Adding a delay before displaying the heart
     });
-
-    function fadeInAudio(audio, duration) {
-        let step = 0.05 / duration;
-        let volume = 0;
-        let interval = setInterval(() => {
-            if (volume < 1) {
-                volume += step;
-                audio.volume = volume;
-            } else {
-                clearInterval(interval);
-            }
-        }, 50);
-    }
-
-    function showAnimationTexts(texts) {
-        let delay = 0;
-        texts.forEach((text, index) => {
-            setTimeout(() => {
-                text.style.display = 'block';
-                text.style.animation = `fadeInOut 4s forwards`;
-                if (index === 5) { // For the counter
-                    setTimeout(() => showCounter(), 4000);
-                }
-            }, delay);
-            delay += 4000; // 4 seconds for each text
-        });
-    }
-
-    function showCounter() {
-        const startDate = new Date('April 13, 2024');
-        const now = new Date();
-        const days = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-        counter.textContent = `${days} days`;
-        counter.style.display = 'block';
-        counter.style.animation = 'fadeInOut 4s forwards';
-        setTimeout(() => {
-            // Show heart after the counter
-            heart.style.display = 'block';
-            heart.style.animation = 'fadeInHeart 3s forwards';
-        }, 9000); // Wait for 4 seconds fade in + 5 seconds display
-    }
 });
+
+function fadeAudioIn(audio) {
+    let volume = 0;
+    const fadeIn = setInterval(() => {
+        if (volume >= 1) clearInterval(fadeIn);
+        volume += 0.01;
+        audio.volume = volume;
+    }, 100);
+}
+
+function displaySentences(container, sentences, index) {
+    if (index < sentences.length) {
+        const sentence = document.createElement('div');
+        sentence.classList.add('glow-text');
+        sentence.textContent = sentences[index];
+        container.appendChild(sentence);
+
+        setTimeout(() => {
+            sentence.style.animation = 'fadeInOut 4s forwards';
+            setTimeout(() => {
+                container.removeChild(sentence);
+                displaySentences(container, sentences, index + 1);
+            }, 4000);
+        }, 2000);
+    }
+}
+
+function displayCounter(container) {
+    const startDate = new Date('2024-04-13');
+    const today = new Date();
+    const daysDiff = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+
+    const counter = document.createElement('div');
+    counter.classList.add('glow-text');
+    counter.textContent = `${daysDiff} days since April 13, 2024`;
+    container.appendChild(counter);
+
+    setTimeout(() => {
+        counter.style.animation = 'fadeOut 2s forwards';
+        setTimeout(() => {
+            container.removeChild(counter);
+        }, 2000);
+    }, 5000);
+}
